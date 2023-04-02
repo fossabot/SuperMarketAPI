@@ -21,11 +21,12 @@ class Brand(MethodView):
         return brand_value
 
 
+    @blp.response(200)
     def delete(self, brand_id):
         brand_value = BrandModel.query.get_or_404(brand_id)
         db.session.delete(brand_value)
         db.session.commit()
-        return {"message":"Item deleted"}, 200
+        return {"message": "Store deleted"}
 
 
 @blp.route("/brand")
