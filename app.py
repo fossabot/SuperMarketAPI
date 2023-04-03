@@ -9,7 +9,7 @@ import models
 
 from resources.item import blp as ItemBlueprint
 from resources.brand import blp as BrandBlueprint
-
+from resources.tag import blp as TagBlueprint
 
 def create_app(db_url=None):
     app = Flask(__name__)
@@ -41,5 +41,6 @@ def create_app(db_url=None):
     # registering the Item and brand blueprints
     api.register_blueprint(ItemBlueprint)
     api.register_blueprint(BrandBlueprint)
+    api.register_blueprint(TagBlueprint)
 
     return app

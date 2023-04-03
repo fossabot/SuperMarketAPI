@@ -30,7 +30,7 @@ class Brand(MethodView):
 
 
 @blp.route("/brand")
-class StoreList(MethodView):
+class BrandList(MethodView):
 
     @blp.response(200, ItemSchema(many=True)) # many=True returns the value in <List of items>
     def get(self):

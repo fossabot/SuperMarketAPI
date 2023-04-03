@@ -10,3 +10,5 @@ class BrandModel(db.Model):
 
     # setting one-to-many relationship with table : brand in db
     items = db.relationship("ItemModel", back_populates="brand", lazy="dynamic")
+    # setting up one-to-many relationship with table : tag in db
+    tags = db.relationship("TagModel", back_populates="brand", lazy="dynamic")
