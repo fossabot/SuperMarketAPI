@@ -1,7 +1,7 @@
 
 
 # This file contains the schema for payload which user will
-# send to the APIs.
+# send to the APIs and receive through APIs.
 
 from marshmallow import Schema, fields
 
@@ -28,6 +28,7 @@ class ItemUpdateSchema(Schema):
 class ItemSchema(PlainItemSchema):
     brand_id = fields.Int(required=True, load_only=True)
     brand = fields.Nested(PlainBrandSchema(), dump_only=True)
+    tags = fields.List(fields.Nested(PlainTagSchema()), dump_only=True)
 
 
 class BrandSchema(PlainBrandSchema):
@@ -39,3 +40,10 @@ class BrandSchema(PlainBrandSchema):
 class TagSchema(PlainTagSchema):
     brand_id = fields.Int(load_only=True)
     brand = fields.Nested(PlainBrandSchema(), dump_only=True)
+    items = fields.List(fields.Nested(PlainItemSchema()), dump_only=True)
+
+
+class TagAndItemSchema(Schema):
+    message = fields.Str()
+    item = fields.Nested(ItemSchema)
+    tag = fields.Nested(TagSchema)

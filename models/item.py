@@ -15,3 +15,6 @@ class ItemModel(db.Model):
 
     # setting one-to-many relationship with table : items in db
     brand = db.relationship("BrandModel", back_populates="items")
+
+    # Setting up many-to-many relationship between 'items' and 'tags' in secondary table : 'item_tags'
+    tags = db.relationship("TagModel", back_populates="items", secondary="items_tags")
