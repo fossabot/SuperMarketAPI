@@ -12,7 +12,7 @@ from schemas import BrandSchema, ItemSchema
 blp = Blueprint("Brands", "brands", description="Operation on brands")
 
 
-@blp.route("/brand/<string:brand_id>")
+@blp.route("/brand/<int:brand_id>")
 class Brand(MethodView):
 
     @blp.response(200, BrandSchema)

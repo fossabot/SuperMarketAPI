@@ -12,7 +12,7 @@ from schemas import TagSchema, TagAndItemSchema
 # creating a blueprint
 blp = Blueprint("Tags", "tags", description="Operation on tags")
 
-@blp.route("/brand/<string:brand_id>/tag")
+@blp.route("/brand/<int:brand_id>/tag")
 class TagsInBrands(MethodView):
 
     @blp.alt_response(404, description="Tag not found")
@@ -37,7 +37,7 @@ class TagsInBrands(MethodView):
 
         return tag
 
-@blp.route("/tag/<string:tag_id>")
+@blp.route("/tag/<int:tag_id>")
 class Tag(MethodView):
 
     @blp.alt_response(404, description="tag not found")
@@ -62,7 +62,7 @@ class Tag(MethodView):
         abort(400, message="Tag is assigned to 1 or more items. Please unlike the Tag and item(s) before deleting")
 
 
-@blp.route("/item/<string:item_id>/tag/<string:tag_id>")
+@blp.route("/item/<int:item_id>/tag/<int:tag_id>")
 class LinkTagsToItem(MethodView):
 
     @blp.alt_response(500, description="Internal Error occurred when linking item with tag")
