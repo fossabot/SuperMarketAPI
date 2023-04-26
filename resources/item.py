@@ -21,7 +21,7 @@ class Item(MethodView):
         return item
 
 
-    @jwt_required()
+    @jwt_required(fresh=True) # Fresh token is required to delete an item
     @blp.response(200)
     def delete(self, item_id):
         item = ItemModel.query.get_or_404(item_id)
