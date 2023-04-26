@@ -3,7 +3,8 @@
 from flask.views import MethodView
 from flask_smorest import Blueprint, abort
 from passlib.hash import pbkdf2_sha256
-from flask_jwt_extended import create_access_token
+from flask_jwt_extended import create_access_token, jwt_required, get_jwt
+from blocklist import BLOCKLIST
 
 from db import db
 from models import UserModel
@@ -39,10 +40,22 @@ class UserLogin(MethodView):
         user = UserModel.query.filter(UserModel.username == user_data["username"]).first()
 
         if user and pbkdf2_sha256.verify(user_data["password"], user.password):
-            access_token = create_access_token(identity=user.id, additional_claims=user_data["username"])
+            access_token = create_access_token(identity=user.id)
             return {"access_token" : access_token}
 
         abort(401, message="Invalid credentials")
+
+
+@blp.route("/logout")
+class UserLogout(MethodView):
+
+    @jwt_required()
+    def post(self):
+        jti = get_jwt()["jti"]
+        BLOCKLIST.add(jti)
+        return { "message" : "Successfully logged out"}
+
+
 
 @blp.route("/user/<int:user_id>")
 class User(MethodView):
